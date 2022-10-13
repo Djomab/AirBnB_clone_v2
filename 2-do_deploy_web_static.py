@@ -5,8 +5,8 @@ import os
 from fabric.api import run, put, env
 from datetime import datetime
 
-#env.use_ssh_config = True
-#env.ssh_config_path = '~/.ssh/school'
+# env.use_ssh_config = True
+# env.ssh_config_path = '~/.ssh/school'
 env.hosts = ['44.200.74.219', '3.239.76.41']
 # Set the username
 env.user = "ubuntu"
@@ -28,17 +28,17 @@ def do_deploy(archive_path):
         # uploading file on remote server
         put(archive_path, "/tmp/")
         # creating folder on remote
-        run("mkdir -p {}".format(folder_path))
+        run("sudo mkdir -p {}".format(folder_path))
         # uncompress file within /temp to the folder
-        run("tar -xzf /tmp/{} -C {}".format(file_name, folder_path))
+        run("sudo tar -xzf /tmp/{} -C {}".format(file_name, folder_path))
         # remove compressed file in /tmp
-        run("rm -rf /tmp/{}".format(file_name))
+        run("sudo rm -rf /tmp/{}".format(file_name))
         # Move all from web_static to new folder
-        run("mv {}web_static/* {}".format(folder_path, folder_path))
-        # Delete web folder
-        run("rm -rf {}web_static".format(folder_path))
+        run("sudo mv {}web_static/* {}".format(folder_path, folder_path))
+        # Delete web_static folder
+        run("sudo rm -rf {}web_static".format(folder_path))
         # Delete the symbolic link /data/web_static/current
-        run("rm -rf /data/web_static/current")
+        run("sudo rm -rf /data/web_static/current")
         # Create a new the symbolic link /data/web_static/current
         run("ln -s {} /data/web_static/current".format(folder_path))
         print('You done it bro, deployed successfully !!!')
