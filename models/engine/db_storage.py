@@ -34,6 +34,8 @@ class DBStorage:
         depending of the class name (argument cls)
         """
         if cls is not None:
+            if type(cls) == str:
+                cls = eval(cls)
             objs = self.__session.query(cls).all()
         else:
             """ if type(cls) == str:
