@@ -1,6 +1,5 @@
 #!/usr/bin/python3
 """ Place Module for HBNB project """
-import imp
 from os import getenv
 import models
 from models.review import Review
